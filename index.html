@@ -75,18 +75,6 @@ body {
 .texto {
   text-align: left;
   line-height: 1.6;
-  animation: aparecer 2s forwards;
-}
-
-@keyframes aparecer {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* BOTONES */
@@ -132,6 +120,21 @@ button {
     opacity: 0;
   }
 }
+
+/* EXPLOSION */
+.explosion {
+  position: fixed;
+  font-size: 18px;
+  color: pink;
+  animation: boom 1s forwards;
+}
+
+@keyframes boom {
+  to {
+    transform: translateY(-150px) scale(1.5);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
@@ -150,29 +153,7 @@ button {
 <div class="card">
 <h1>Feliz primer mes mi amor 💕</h1>
 
-<p class="texto">
-Feliz primer mes de novios, mi amor 💕<br><br>
-
-En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.<br><br>
-
-No sabes lo feliz que me haces. Aunque no nos veamos todo el tiempo, cada momento contigo en persona es de los más bonitos para mí. Poder hablar contigo, sentir tus abrazos, tus besos y todo lo que compartimos… es un sentimiento que no puedo describir con palabras.<br><br>
-
-Te amo con todo mi corazón. Me encanta tu manera de ser conmigo, me gusta que seas dormilona… pero mi dormilona jsjs 💖. Me encantan tus ojos, tu pelo, tus pestañas… todo de ti me gusta. Y no quiero que cambies nada, porque así tal como eres fue de la manera en que me enamoré de ti.<br><br>
-
-Jamás voy a olvidar el primer día que nos vimos en persona… ese momento en el parque, nuestro primer abrazo y nuestro primer beso. Lo llevo guardado en mi corazón ❤️.<br><br>
-
-Me enamoré de ti antes de besarte, antes de tocarte… me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona.<br><br>
-
-Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.<br><br>
-
-Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante… pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.<br><br>
-
-Te voy a amar hasta donde tú me lo permitas, mi amor 💕.<br><br>
-
-Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, porque no eres como nadie más… eres tú, y eso es lo que te hace especial para mí.<br><br>
-
-Quiero vivir mil cosas contigo… y esto apenas comienza ❤️
-</p>
+<p id="texto"></p>
 
 <audio id="music" loop>
 <source src="mi-linda-mujer.mp3" type="audio/mpeg">
@@ -180,7 +161,7 @@ Quiero vivir mil cosas contigo… y esto apenas comienza ❤️
 
 <button onclick="document.getElementById('music').play()">🎵 Nuestra canción</button>
 
-<button onclick="mostrarSorpresa()">⚠️ No presiones esto</button>
+<button onclick="sorpresa()">⚠️ No presiones esto</button>
 
 <p id="mensajeSorpresa">Te amo muchísimo mi niña 😳❤️</p>
 
@@ -188,10 +169,45 @@ Quiero vivir mil cosas contigo… y esto apenas comienza ❤️
 
 <script>
 
+/* MENSAJE */
+const mensaje = `Feliz primer mes de novios, mi amor 💕
+
+En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
+
+No sabes lo feliz que me haces. Aunque no nos veamos todo el tiempo, cada momento contigo en persona es de los más bonitos para mí. Poder hablar contigo, sentir tus abrazos, tus besos y todo lo que compartimos… es un sentimiento que no puedo describir con palabras.
+
+Te amo con todo mi corazón. Me encanta tu manera de ser conmigo, me gusta que seas dormilona… pero mi dormilona jsjs 💖. Me encantan tus ojos, tu pelo, tus pestañas… todo de ti me gusta. Y no quiero que cambies nada, porque así tal como eres fue de la manera en que me enamoré de ti.
+
+Jamás voy a olvidar el primer día que nos vimos en persona… ese momento en el parque, nuestro primer abrazo y nuestro primer beso. Lo llevo guardado en mi corazón ❤️.
+
+Me enamoré de ti antes de besarte, antes de tocarte… me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona.
+
+Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.
+
+Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante… pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.
+
+Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
+
+Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, porque no eres como nadie más… eres tú, y eso es lo que te hace especial para mí.
+
+Quiero vivir mil cosas contigo… y esto apenas comienza ❤️`;
+
+let i = 0;
+
+function escribirTexto() {
+  if (i < mensaje.length) {
+    document.getElementById("texto").innerHTML +=
+      mensaje.charAt(i) === "\n" ? "<br><br>" : mensaje.charAt(i);
+    i++;
+    setTimeout(escribirTexto, 20);
+  }
+}
+
 /* INTRO */
 function entrar() {
   document.getElementById("inicio").classList.add("ocultar");
   document.getElementById("music").play();
+  escribirTexto();
 }
 
 /* CONTADOR */
@@ -204,9 +220,26 @@ function actualizarContador() {
 }
 actualizarContador();
 
-/* SORPRESA */
-function mostrarSorpresa() {
+/* SORPRESA PRO */
+function sorpresa() {
   document.getElementById("mensajeSorpresa").style.display = "block";
+
+  // vibración (si el celular lo permite)
+  if (navigator.vibrate) {
+    navigator.vibrate([200,100,200]);
+  }
+
+  // explosión de "te amo"
+  for (let i = 0; i < 20; i++) {
+    let e = document.createElement("div");
+    e.className = "explosion";
+    e.innerText = "Te amo 💖";
+    e.style.left = Math.random()*100 + "vw";
+    e.style.top = Math.random()*100 + "vh";
+    document.body.appendChild(e);
+
+    setTimeout(()=> e.remove(),1000);
+  }
 }
 
 /* ESTRELLAS */
