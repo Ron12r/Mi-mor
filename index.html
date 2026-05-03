@@ -54,10 +54,7 @@ body {
 }
 
 @keyframes fadeOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
+  to { opacity: 0; visibility: hidden; }
 }
 
 /* CONTENIDO */
@@ -75,7 +72,6 @@ body {
 #texto {
   text-align: left;
   line-height: 1.6;
-  min-height: 200px;
 }
 
 /* BOTONES */
@@ -88,7 +84,7 @@ button {
   color: white;
 }
 
-/* MENSAJE GRANDE ABAJO */
+/* MENSAJE GRANDE */
 #mensajeSorpresa {
   display: none;
   position: fixed;
@@ -96,70 +92,41 @@ button {
   left: 50%;
   transform: translateX(-50%);
   font-size: 28px;
-  font-weight: bold;
   background: rgba(0,0,0,0.6);
   padding: 15px 25px;
   border-radius: 20px;
   color: #ff4d6d;
-  box-shadow: 0 0 20px #ff4d6d;
-  z-index: 1000;
 }
 
 /* ESTRELLAS */
 .star {
   position: fixed;
   top: -10px;
-  color: #ff4d6d;
   animation: fall linear infinite;
 }
 
 @keyframes fall {
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
+  to { transform: translateY(100vh); opacity: 0; }
 }
 
-/* CORAZONES + TEXTO */
+/* CORAZONES */
 .heart {
   position: fixed;
   font-size: 26px;
-  animation: floatUp 1.5s ease forwards;
-  pointer-events: none;
-  text-shadow: 0 0 10px pink;
+  animation: floatUp 1.5s forwards;
 }
 
 @keyframes floatUp {
-  to {
-    transform: translateY(-120px);
-    opacity: 0;
-  }
+  to { transform: translateY(-120px); opacity: 0; }
 }
 
-/* EXPLOSION */
-.explosion {
-  position: fixed;
-  font-size: 18px;
-  color: pink;
-  animation: boom 1s forwards;
-}
-
-@keyframes boom {
-  to {
-    transform: translateY(-150px) scale(1.5);
-    opacity: 0;
-  }
-}
-
-/* FUEGOS ARTIFICIALES */
+/* FUEGOS */
 .firework {
   position: fixed;
-  font-size: 20px;
-  animation: explode 1s ease-out forwards;
+  animation: explode 1s forwards;
 }
 
 @keyframes explode {
-  from { transform: scale(0.5); opacity: 1; }
   to { transform: scale(2); opacity: 0; }
 }
 </style>
@@ -173,53 +140,61 @@ button {
   <button onclick="entrar()">Leer mensaje 💕</button>
 </div>
 
-<!-- CONTADOR -->
 <h2 id="contador"></h2>
 
-<!-- CONTENIDO -->
 <div class="card">
 <h1>Feliz primer mes mi amor 💕</h1>
-
 <p id="texto"></p>
 
 <audio id="music" loop>
 <source src="mi-linda-mujer.mp3" type="audio/mpeg">
 </audio>
 
-<button onclick="document.getElementById('music').play()">🎵 Nuestra canción</button>
+<button onclick="music.play()">🎵 Nuestra canción</button>
 <button onclick="sorpresa()">⚠️ No presiones esto</button>
-
 </div>
 
 <div id="mensajeSorpresa">Te amo muchísimo mi niña 😍❤️</div>
 
 <script>
 
-/* MENSAJE */
-const mensaje = `Feliz primer mes de novios, mi amor 💕
+/* TEXTO REAL */
+const mensaje = `En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
 
-... (tu texto completo aquí) ...`;
+No sabes lo feliz que me haces. Aunque no nos veamos todo el tiempo, cada momento contigo en persona es de los más bonitos para mí. Poder hablar contigo, sentir tus abrazos, tus besos y todo lo que compartimos es un sentimiento que no puedo describir con palabras.
+
+Te amo con todo mi corazón. Me encanta tu manera de ser conmigo, me gusta que seas dormilono ,pero mi dormilona jsjs 💖. Me encantan tus ojos, tu pelo, tus pestañas, todo de ti me gusta. Y no quiero que cambies nada, porque así tal como eres fue de la manera en que me enamoré de ti.
+
+Jamás voy a olvidar el primer día que nos vimos en persona ,ese momento en el parque, nuestro primer abrazo y nuestro primer beso. Lo llevo guardado en mi corazón ❤️.
+
+Me enamoré de ti antes de besarte, antes de tocarte, me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona favorita.
+
+Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.
+
+Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante, pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.
+
+Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
+
+Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy , y eso es lo que te hace especial para mí.
+
+Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 
 let i = 0;
 
-/* TEXTO ROMÁNTICO */
+/* ESCRITURA ROMÁNTICA */
 function escribirTexto() {
   if (i < mensaje.length) {
-    let char = mensaje.charAt(i);
+    let c = mensaje.charAt(i);
 
-    if (char === "\n") {
-      texto.innerHTML += "<br><br>";
-    } else {
-      texto.innerHTML += char;
-    }
+    texto.innerHTML += (c === "\n") ? "<br><br>" : c;
 
     i++;
 
-    let velocidad = 40;
-    if (char === ",") velocidad = 120;
-    if (char === ".") velocidad = 250;
+    let v = 40;
+    if (c === ",") v = 120;
+    if (c === ".") v = 250;
 
-    setTimeout(escribirTexto, velocidad);
+    setTimeout(escribirTexto, v);
   }
 }
 
@@ -234,76 +209,52 @@ function entrar() {
 
 /* CONTADOR */
 function actualizarContador() {
-  const inicioFecha = new Date("2026-03-08");
+  const inicioF = new Date("2026-03-08");
   const hoy = new Date();
-  const dias = Math.floor((hoy - inicioFecha) / (1000*60*60*24));
-  contador.innerText = "Llevamos " + dias + " días juntos 💕";
+  contador.innerText =
+    "Llevamos " + Math.floor((hoy - inicioF)/(1000*60*60*24)) + " días juntos 💕";
 }
 actualizarContador();
 
-/* CLICK CORAZONES + FRASES */
-document.addEventListener("click", function(e){
-
-  const cosas = [
-    "❤️","💖","💕","💘",
-    "mi niña linda 💕",
-    "mi princesa 👑",
-    "mi dormilona 😴💖",
-    "mi bb 🥺❤️",
-    "mi mundo 🌎💖",
-    "mi amor 💕"
-  ];
-
-  let item = document.createElement("div");
-  item.className = "heart";
-  item.innerText = cosas[Math.floor(Math.random()*cosas.length)];
-
-  item.style.left = e.clientX + "px";
-  item.style.top = e.clientY + "px";
-
-  document.body.appendChild(item);
-  setTimeout(()=> item.remove(),1500);
+/* CLICK */
+document.addEventListener("click", e=>{
+  const cosas = ["❤️","💖","mi niña 💕","mi princesa 👑","mi amor 💘"];
+  let d = document.createElement("div");
+  d.className="heart";
+  d.innerText = cosas[Math.floor(Math.random()*cosas.length)];
+  d.style.left=e.clientX+"px";
+  d.style.top=e.clientY+"px";
+  document.body.appendChild(d);
+  setTimeout(()=>d.remove(),1500);
 });
 
 /* ESTRELLAS */
-function crearEstrella() {
-  const e = document.createElement("div");
-  e.className = "star";
-  const t = ["✨","💖","Te amo","mi amor","💘"];
-  e.innerText = t[Math.floor(Math.random()*t.length)];
-  e.style.left = Math.random()*100 + "vw";
-  e.style.animationDuration = (3 + Math.random()*5) + "s";
-  document.body.appendChild(e);
-  setTimeout(()=> e.remove(),8000);
-}
-setInterval(crearEstrella,300);
+setInterval(()=>{
+  let s=document.createElement("div");
+  s.className="star";
+  s.innerText=["✨","💖","Te amo"][Math.floor(Math.random()*3)];
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration="5s";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),5000);
+},400);
 
-/* FUEGOS ARTIFICIALES */
-function fuegosArtificiales() {
-  for (let i = 0; i < 25; i++) {
-    let f = document.createElement("div");
-    f.className = "firework";
-    f.innerText = ["✨","💖","💫","🎆"][Math.floor(Math.random()*4)];
-    f.style.left = Math.random()*100 + "vw";
-    f.style.top = Math.random()*100 + "vh";
-    document.body.appendChild(f);
-    setTimeout(() => f.remove(), 1000);
-  }
-}
+/* FUEGOS */
+setInterval(()=>{
+  let f=document.createElement("div");
+  f.className="firework";
+  f.innerText="🎆";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*100+"vh";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1000);
+},3000);
 
 /* SORPRESA */
-function sorpresa() {
-  mensajeSorpresa.style.display = "block";
-
-  if (navigator.vibrate) {
-    navigator.vibrate([200,100,200]);
-  }
-
-  fuegosArtificiales();
-
-  setTimeout(() => {
-    mensajeSorpresa.style.display = "none";
-  }, 4000);
+function sorpresa(){
+  mensajeSorpresa.style.display="block";
+  if(navigator.vibrate) navigator.vibrate([200,100,200]);
+  setTimeout(()=>mensajeSorpresa.style.display="none",4000);
 }
 
 </script>
