@@ -118,6 +118,21 @@ button{
   to{transform:translateY(-120px);opacity:0;}
 }
 
+/* EXPLOSION */
+.explosion{
+  position:fixed;
+  font-weight:bold;
+  color:#ff4d6d;
+  text-shadow:0 0 10px pink,0 0 20px red;
+  animation:boom 1.5s ease-out forwards;
+}
+
+@keyframes boom{
+  0%{transform:translate(0,0) scale(0.5);opacity:1;}
+  100%{transform:translate(var(--x),var(--y)) scale(1.8);opacity:0;}
+}
+
+/* FUEGOS */
 .firework{
   position:fixed;
   font-size:32px;
@@ -126,21 +141,11 @@ button{
 @keyframes explode{
   to{transform:scale(2);opacity:0;}
 }
-
-.explosion{
-  position:fixed;
-  color:pink;
-  animation:boom 1.5s forwards;
-}
-@keyframes boom{
-  to{transform:translateY(-150px);opacity:0;}
-}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="inicio">
   <img src="foto.jpg" class="foto" id="fotoInicio">
   <h1 class="tituloInicio">Para ti mi amor 💕</h1>
@@ -152,7 +157,6 @@ button{
 
 <div class="card">
 <h1>Feliz primer mes mi amor 💕</h1>
-
 <p id="texto"></p>
 
 <audio id="music" loop>
@@ -160,24 +164,23 @@ button{
 </audio>
 
 <button onclick="music.play()">🎵 Nuestra canción</button>
-<button onclick="sorpresa()">⚠️ No presiones esto</button>
+<button onclick="sorpresa()">💥 Sorpresa</button>
 </div>
 
-<div id="mensajeSorpresa">Te amo muchísimo mi niña 😍❤️</div>
+<div id="mensajeSorpresa">TE AMO MUCHÍSIMO MI NIÑA 😍❤️</div>
 
 <script>
 
-/* CAMBIAR FOTO INICIO */
-const fotos = ["foto.jpg","foto2.jpg","foto3.jpg"];
-let index = 0;
+/* FOTO CAMBIO */
+const fotos=["foto.jpg","foto2.jpg","foto3.jpg"];
+let index=0;
+fotoInicio.onclick=()=>{
+  index=(index+1)%fotos.length;
+  fotoInicio.src=fotos[index];
+};
 
-fotoInicio.addEventListener("click", () => {
-  index = (index + 1) % fotos.length;
-  fotoInicio.src = fotos[index];
-});
-
-/* TEXTO COMPLETO */
-const mensaje = `En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
+/* TEXTO */
+const mensaje=`En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
 
 No sabes lo feliz que me haces. Aunque no nos veamos todo el tiempo, cada momento contigo en persona es de los más bonitos para mí. Poder hablar contigo, sentir tus abrazos, tus besos y todo lo que compartimos es un sentimiento que no puedo describir con palabras.
 
@@ -198,28 +201,21 @@ Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me am
 Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 
 let i=0;
-
 function escribirTexto(){
   if(i<mensaje.length){
     let c=mensaje.charAt(i);
     texto.innerHTML+=(c=="\n")?"<br><br>":c;
     i++;
-
     let v=40;
     if(c==",")v=120;
     if(c==".")v=250;
-
     setTimeout(escribirTexto,v);
   }
 }
 
-/* ENTRAR */
 function entrar(){
   inicio.classList.add("ocultar");
   music.play();
-
-  texto.innerHTML="";
-  i = 0;
   escribirTexto();
 }
 
@@ -231,33 +227,7 @@ setInterval(()=>{
 },1000);
 
 /* INTERACCION */
-let intervalo=null;
-
-document.addEventListener("click",e=>{
-  crearCorazon(e.clientX,e.clientY);
-});
-
-function iniciar(x,y){
-  if(intervalo) return;
-  intervalo=setInterval(()=>crearCorazon(x,y),100);
-}
-
-function detener(){
-  clearInterval(intervalo);
-  intervalo=null;
-}
-
-document.addEventListener("mousedown",e=>iniciar(e.clientX,e.clientY));
-document.addEventListener("mouseup",detener);
-document.addEventListener("mouseleave",detener);
-
-document.addEventListener("touchstart",e=>{
-  let t=e.touches[0];
-  iniciar(t.clientX,t.clientY);
-});
-document.addEventListener("touchend",detener);
-
-function crearCorazon(x,y){
+document.addEventListener("click", e=>{
   const cosas=[
     "❤️","💖","💕","💘",
     "mi niña 🥺💖","mi amor 💕","mi bb 🥺❤️",
@@ -268,25 +238,43 @@ function crearCorazon(x,y){
   let d=document.createElement("div");
   d.className="heart";
   d.innerText=cosas[Math.floor(Math.random()*cosas.length)];
-
-  d.style.left=x+"px";
-  d.style.top=y+"px";
-  d.style.fontSize=(20+Math.random()*14)+"px";
-
+  d.style.left=e.clientX+"px";
+  d.style.top=e.clientY+"px";
+  d.style.fontSize=(22+Math.random()*16)+"px";
   document.body.appendChild(d);
   setTimeout(()=>d.remove(),1500);
-}
+});
 
-/* ESTRELLAS */
-setInterval(()=>{
-  let s=document.createElement("div");
-  s.className="star";
-  s.innerText=["✨","💖","Te amo"][Math.floor(Math.random()*3)];
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration="5s";
-  document.body.appendChild(s);
-  setTimeout(()=>s.remove(),5000);
-},400);
+/* SORPRESA */
+function sorpresa(){
+  if(navigator.vibrate){
+    navigator.vibrate([300,100,300]);
+  }
+
+  mensajeSorpresa.style.display="block";
+
+  for(let i=0;i<120;i++){
+    let t=document.createElement("div");
+    t.className="explosion";
+    t.innerText="TE AMO 💖";
+
+    t.style.left=window.innerWidth/2+"px";
+    t.style.top=window.innerHeight/2+"px";
+
+    let dx=(Math.random()*400-200)+"px";
+    let dy=(Math.random()*400-200)+"px";
+
+    t.style.setProperty("--x",dx);
+    t.style.setProperty("--y",dy);
+
+    t.style.fontSize=(24+Math.random()*30)+"px";
+
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),1500);
+  }
+
+  setTimeout(()=>mensajeSorpresa.style.display="none",4000);
+}
 
 /* FUEGOS */
 setInterval(()=>{
@@ -298,23 +286,6 @@ setInterval(()=>{
   document.body.appendChild(f);
   setTimeout(()=>f.remove(),1200);
 },3000);
-
-/* SORPRESA */
-function sorpresa(){
-  mensajeSorpresa.style.display="block";
-
-  for(let i=0;i<150;i++){
-    let t=document.createElement("div");
-    t.className="explosion";
-    t.innerText="Te amo 💖";
-    t.style.left=Math.random()*100+"vw";
-    t.style.top=Math.random()*100+"vh";
-    document.body.appendChild(t);
-    setTimeout(()=>t.remove(),1500);
-  }
-
-  setTimeout(()=>mensajeSorpresa.style.display="none",4000);
-}
 
 </script>
 
