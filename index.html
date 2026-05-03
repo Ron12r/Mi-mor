@@ -26,32 +26,29 @@ body{
   align-items:center;
   z-index:999;
 }
+
 .foto{
   width:90%;
   max-width:350px;
   border-radius:20px;
   animation:zoom 6s infinite alternate;
+  cursor:pointer;
 }
 
 .tituloInicio{
   color:#ff4d6d;
   font-size:28px;
   margin-top:20px;
-  animation:fadeIn 2s ease;
 }
+
 .subInicio{
   font-size:16px;
   opacity:0.8;
-  animation:fadeIn 3s ease;
 }
 
 @keyframes zoom{
   from{transform:scale(1);}
   to{transform:scale(1.1);}
-}
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;}
 }
 
 /* ocultar */
@@ -79,14 +76,13 @@ body{
   line-height:1.6;
 }
 
-/* FOTOS EXTRA */
+/* FOTOS SECUENCIA */
 .fotoExtra{
   width:90%;
   max-width:300px;
   border-radius:20px;
   margin-top:15px;
   display:none;
-  animation:fadeIn 1s ease;
 }
 
 /* BOTONES */
@@ -155,9 +151,9 @@ button{
 
 <!-- INTRO -->
 <div id="inicio">
-  <img src="foto.jpg" class="foto">
+  <img src="foto.jpg" class="foto" id="fotoInicio">
   <h1 class="tituloInicio">Para ti mi amor 💕</h1>
-  <p class="subInicio">Nuestra historia apenas comienza… ✨</p>
+  <p class="subInicio">Toca la foto 😏✨</p>
   <button onclick="entrar()">Leer mensaje 💕</button>
 </div>
 
@@ -183,8 +179,17 @@ button{
 
 <script>
 
-/* TEXTO */
-const mensaje=`En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
+/* CAMBIAR FOTO INICIO */
+const fotos = ["foto.jpg","foto2.jpg","foto3.jpg"];
+let index = 0;
+
+fotoInicio.addEventListener("click", () => {
+  index = (index + 1) % fotos.length;
+  fotoInicio.src = fotos[index];
+});
+
+/* TEXTO COMPLETO */
+const mensaje = `En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
 
 No sabes lo feliz que me haces. Aunque no nos veamos todo el tiempo, cada momento contigo en persona es de los más bonitos para mí. Poder hablar contigo, sentir tus abrazos, tus besos y todo lo que compartimos es un sentimiento que no puedo describir con palabras.
 
@@ -194,15 +199,18 @@ Jamás voy a olvidar el primer día que nos vimos en persona, ese momento en el 
 
 Me enamoré de ti antes de besarte, antes de tocarte, me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona favorita.
 
-Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día.
+Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.
 
-Siempre voy a apoyarte en todo lo que quieras hacer, mi niña.
+Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante, pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.
+
+Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
+
+Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy, y eso es lo que te hace especial para mí.
 
 Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 
 let i=0;
 
-/* TEXTO */
 function escribirTexto(){
   if(i<mensaje.length){
     let c=mensaje.charAt(i);
@@ -217,7 +225,7 @@ function escribirTexto(){
   }
 }
 
-/* ENTRAR CON FOTOS */
+/* ENTRAR */
 function entrar(){
   inicio.classList.add("ocultar");
   music.play();
@@ -242,8 +250,31 @@ setInterval(()=>{
   contador.innerText="Llevamos "+Math.floor((hoy-inicioF)/(1000*60*60*24))+" días juntos 💕";
 },1000);
 
-/* LLUVIA */
-let intervalo;
+/* INTERACCION */
+let intervalo=null;
+
+document.addEventListener("click",e=>{
+  crearCorazon(e.clientX,e.clientY);
+});
+
+function iniciar(x,y){
+  if(intervalo) return;
+  intervalo=setInterval(()=>crearCorazon(x,y),100);
+}
+
+function detener(){
+  clearInterval(intervalo);
+  intervalo=null;
+}
+
+document.addEventListener("mousedown",e=>iniciar(e.clientX,e.clientY));
+document.addEventListener("mouseup",detener);
+
+document.addEventListener("touchstart",e=>{
+  let t=e.touches[0];
+  iniciar(t.clientX,t.clientY);
+});
+document.addEventListener("touchend",detener);
 
 function crearCorazon(x,y){
   const cosas=[
@@ -256,32 +287,20 @@ function crearCorazon(x,y){
   let d=document.createElement("div");
   d.className="heart";
   d.innerText=cosas[Math.floor(Math.random()*cosas.length)];
-  d.style.left=(x+Math.random()*40-20)+"px";
-  d.style.top=(y+Math.random()*40-20)+"px";
+
+  d.style.left=x+"px";
+  d.style.top=y+"px";
   d.style.fontSize=(20+Math.random()*14)+"px";
 
   document.body.appendChild(d);
   setTimeout(()=>d.remove(),1500);
 }
 
-document.addEventListener("mousedown",e=>{
-  intervalo=setInterval(()=>crearCorazon(e.clientX,e.clientY),80);
-});
-document.addEventListener("mouseup",()=>clearInterval(intervalo));
-
-document.addEventListener("touchstart",e=>{
-  intervalo=setInterval(()=>{
-    let t=e.touches[0];
-    crearCorazon(t.clientX,t.clientY);
-  },80);
-});
-document.addEventListener("touchend",()=>clearInterval(intervalo));
-
 /* ESTRELLAS */
 setInterval(()=>{
   let s=document.createElement("div");
   s.className="star";
-  s.innerText=["✨","💖","Te amo","mi amor"][Math.floor(Math.random()*4)];
+  s.innerText=["✨","💖","Te amo"][Math.floor(Math.random()*3)];
   s.style.left=Math.random()*100+"vw";
   s.style.animationDuration="5s";
   document.body.appendChild(s);
@@ -309,13 +328,13 @@ function sorpresa(){
     t.innerText="Te amo 💖";
     t.style.left=Math.random()*100+"vw";
     t.style.top=Math.random()*100+"vh";
-    t.style.fontSize=(18+Math.random()*25)+"px";
     document.body.appendChild(t);
-    setTimeout(()=>t.remove(),1800);
+    setTimeout(()=>t.remove(),1500);
   }
 
   setTimeout(()=>mensajeSorpresa.style.display="none",4000);
 }
+
 </script>
 
 </body>
