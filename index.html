@@ -76,15 +76,6 @@ body{
   line-height:1.6;
 }
 
-/* FOTOS SECUENCIA */
-.fotoExtra{
-  width:90%;
-  max-width:300px;
-  border-radius:20px;
-  margin-top:15px;
-  display:none;
-}
-
 /* BOTONES */
 button{
   margin-top:20px;
@@ -153,7 +144,7 @@ button{
 <div id="inicio">
   <img src="foto.jpg" class="foto" id="fotoInicio">
   <h1 class="tituloInicio">Para ti mi amor 💕</h1>
-  <p class="subInicio">Toca la foto 🙈❤️✨</p>
+  <p class="subInicio">Toca la foto para ver nuestros momentos 💖</p>
   <button onclick="entrar()">Leer mensaje 💕</button>
 </div>
 
@@ -161,9 +152,6 @@ button{
 
 <div class="card">
 <h1>Feliz primer mes mi amor 💕</h1>
-
-<img id="foto2" src="foto2.jpg" class="fotoExtra">
-<img id="foto3" src="foto3.jpg" class="fotoExtra">
 
 <p id="texto"></p>
 
@@ -230,17 +218,9 @@ function entrar(){
   inicio.classList.add("ocultar");
   music.play();
 
-  foto2.style.display="block";
-
-  setTimeout(()=>{
-    foto2.style.display="none";
-    foto3.style.display="block";
-  },3000);
-
-  setTimeout(()=>{
-    foto3.style.display="none";
-    escribirTexto();
-  },6000);
+  texto.innerHTML="";
+  i = 0;
+  escribirTexto();
 }
 
 /* CONTADOR */
@@ -269,6 +249,7 @@ function detener(){
 
 document.addEventListener("mousedown",e=>iniciar(e.clientX,e.clientY));
 document.addEventListener("mouseup",detener);
+document.addEventListener("mouseleave",detener);
 
 document.addEventListener("touchstart",e=>{
   let t=e.touches[0];
