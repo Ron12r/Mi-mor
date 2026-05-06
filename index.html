@@ -14,6 +14,7 @@ body{
   overflow:hidden;
 }
 
+/* FONDO */
 body.activo{
   background: radial-gradient(circle, #1a001f, #000);
 }
@@ -42,10 +43,12 @@ body.activo{
 /* ORBITA */
 .orbita{
   position:absolute;
-  width:400px;
-  height:400px;
+  width:520px;   /* MÁS GRANDE */
+  height:520px;
   border-radius:50%;
-  animation:rotar 20s linear infinite;
+  animation:rotar 22s linear infinite;
+  pointer-events:none; /* 👈 NO BLOQUEA BOTÓN */
+  z-index:1;
 }
 @keyframes rotar{
   to{transform:rotate(360deg);}
@@ -53,10 +56,11 @@ body.activo{
 
 .orbita img{
   position:absolute;
-  width:90px;
+  width:120px; /* MÁS GRANDES */
   top:50%;
   left:50%;
   transform-origin:center;
+  pointer-events:auto; /* 👈 SÍ SE PUEDEN TOCAR */
 }
 
 /* CAIDA DIBUJOS */
@@ -97,6 +101,7 @@ button{
   background:#ff4d6d;
   color:white;
   margin-top:10px;
+  z-index:3;
 }
 
 /* TEXTO */
@@ -196,10 +201,14 @@ setInterval(()=>{
 
 /* FRASES */
 const frases=[
-"Te amo mucho Kristel 💖",
+"Te amo mucho mi Kristel 💖",
+"eres mi dormilona 🤭 💖",
+"bañate amorr , jsjs mentira 🫢❤️",
+"eres mi universo 🌌",
+"te amoo mushooteeee 🥹💖✨",
 "Eres mi felicidad 💕",
 "Mi niña hermosa 😍",
-"Siempre tú 💘",
+"te amare hasta donde me lo permitas 💘",
 "Mi lugar favorito eres tú 💞"
 ];
 
@@ -232,7 +241,7 @@ imgs.forEach((src,i)=>{
   img.src=src;
 
   let ang=(i/imgs.length)*360;
-  img.style.transform=`rotate(${ang}deg) translateY(-180px) rotate(-${ang}deg)`;
+  img.style.transform=`rotate(${ang}deg) translateY(-240px) rotate(-${ang}deg)`; // MÁS LEJOS
 
   img.onclick=efectoClick;
 
@@ -265,16 +274,6 @@ Te amo con todo mi corazón. Me encanta tu manera de ser conmigo, me gusta que s
 Jamás voy a olvidar el primer día que nos vimos en persona, ese momento en el parque, nuestro primer abrazo y nuestro primer beso. Lo llevo guardado en mi corazón ❤️.
 
 Me enamoré de ti antes de besarte, antes de tocarte, me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona favorita.
-
-Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.
-
-Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante, pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.
-
-Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
-
-Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy, y eso es lo que te hace especial para mí.
-
-Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 
 let i=0;
 function escribir(){
