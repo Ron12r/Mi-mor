@@ -7,11 +7,16 @@
 <style>
 body{
   margin:0;
-  background:black;
-  color:white;
   font-family:Arial;
+  color:white;
   text-align:center;
-  overflow-x:hidden;
+  background:black;
+  overflow:hidden;
+}
+
+/* FONDO */
+body.activo{
+  background: radial-gradient(circle, #1a001f, #000);
 }
 
 /* ESTRELLAS */
@@ -22,9 +27,18 @@ body{
   background:white;
   animation:parpadeo 2s infinite;
 }
+@keyframes parpadeo{50%{opacity:0.3;}}
 
-@keyframes parpadeo{
-  50%{opacity:0.3;}
+/* CORAZONES */
+.corazon{
+  position:fixed;
+  color:#ff4d6d;
+  font-size:20px;
+  animation:caer 6s linear infinite;
+}
+@keyframes caer{
+  from{transform:translateY(-10vh);}
+  to{transform:translateY(110vh);}
 }
 
 /* INICIO */
@@ -36,34 +50,28 @@ body{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background:black;
   z-index:999;
-  overflow:hidden;
+  background:black;
 }
 
 /* FOTO */
 .foto{
-  width:95%;
-  max-width:320px;
+  width:90%;
+  max-width:300px;
   border-radius:20px;
-  z-index:2;
-  margin-bottom:10px;
 }
 
 /* DIBUJOS */
 .dibujoInicio{
   position:absolute;
-  z-index:1;
-  animation:flotar 5s ease-in-out infinite alternate;
+  animation:flotar 4s ease-in-out infinite alternate;
   cursor:pointer;
 }
-
 @keyframes flotar{
-  from{transform:translateY(0);}
-  to{transform:translateY(-25px);}
+  to{transform:translateY(-20px);}
 }
 
-/* BOTÓN */
+/* BOTONES */
 button{
   padding:12px;
   border:none;
@@ -79,16 +87,43 @@ button{
   margin:auto;
   text-align:left;
   line-height:1.6;
+  margin-top:20px;
+}
+
+/* VENTANA */
+.fondoBlur{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(5px);
+  z-index:2000;
+}
+
+.ventana{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
+  padding:20px;
+  border-radius:20px;
+  width:75%;
+  max-width:300px;
+  text-align:center;
+  animation:zoom 0.3s forwards;
+  z-index:2001;
+}
+@keyframes zoom{
+  to{transform:translate(-50%,-50%) scale(1);}
 }
 
 /* EXPLOSION */
 .explosion{
   position:fixed;
   color:#ff4d6d;
-  font-size:24px;
   animation:boom 1s forwards;
 }
-
 @keyframes boom{
   to{transform:translate(var(--x),var(--y));opacity:0;}
 }
@@ -112,7 +147,7 @@ button{
 </div>
 
 <h2 id="contador"></h2>
-<p id="texto"></p>
+<p id="texto">Cargando mensaje... 💖</p>
 
 <audio id="music" loop>
 <source src="mi-linda-mujer.mp3">
@@ -124,7 +159,7 @@ button{
 <script>
 
 /* ⭐ ESTRELLAS */
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
   let e=document.createElement("div");
   e.className="estrella";
   e.style.left=Math.random()*100+"vw";
@@ -132,45 +167,70 @@ for(let i=0;i<80;i++){
   document.body.appendChild(e);
 }
 
+/* ❤️ CORAZONES */
+setInterval(()=>{
+  let c=document.createElement("div");
+  c.className="corazon";
+  c.innerText="❤️";
+  c.style.left=Math.random()*100+"vw";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),6000);
+},500);
+
 /* FRASES */
-const frases=["Te amo 💖","Mi niña 💕","Mi vida 💞","Mi todo 😍"];
+const frases=[
+"Te amo mucho Kristel 💖",
+"Eres mi felicidad 💕",
+"Mi niña hermosa 😍",
+"Siempre tú 💘",
+"Mi lugar favorito eres tú 💞",
+"Eres lo mejor que tengo 💗"
+];
 
 /* VENTANA */
 function efectoClick(){
-  alert(frases[Math.floor(Math.random()*frases.length)]);
+  if(navigator.vibrate) navigator.vibrate(100);
+
+  let fondo=document.createElement("div");
+  fondo.className="fondoBlur";
+
+  let v=document.createElement("div");
+  v.className="ventana";
+  v.innerHTML=`<h3>Para ti 💕</h3><p>${frases[Math.random()*frases.length|0]}</p>`;
+
+  document.body.appendChild(fondo);
+  document.body.appendChild(v);
+
+  fondo.onclick=()=>{fondo.remove();v.remove();};
+  v.onclick=()=>{fondo.remove();v.remove();};
 }
 
 /* IMÁGENES */
-const imagenes=[
-"snoopy1.png","snoopy2.png","snoopy3.png",
-"dibujo1.png","dibujo2.png","dibujo3.png"
-];
+const imgs=["snoopy1.png","snoopy2.png","snoopy3.png","dibujo1.png","dibujo2.png","dibujo3.png"];
 
-/* 🔥 CÍRCULO MÁS GRANDE */
-const centroX = window.innerWidth/2;
-const centroY = window.innerHeight/2;
-const radio = 240; // MÁS ALEJADO
+let cx=window.innerWidth/2;
+let cy=window.innerHeight/2;
+let r=240;
 
-imagenes.forEach((src,i)=>{
-  let angulo = (i/imagenes.length)*(2*Math.PI);
+imgs.forEach((src,i)=>{
+  let ang=(i/imgs.length)*2*Math.PI;
 
-  let x = centroX + radio*Math.cos(angulo);
-  let y = centroY + radio*Math.sin(angulo);
+  let x=cx+r*Math.cos(ang);
+  let y=cy+r*Math.sin(ang);
 
   let img=document.createElement("img");
   img.src=src;
   img.className="dibujoInicio";
-
   img.style.left=(x-60)+"px";
   img.style.top=(y-60)+"px";
-  img.style.width="130px"; // MÁS GRANDE
+  img.style.width="120px";
 
   img.onclick=efectoClick;
 
-  document.getElementById("inicio").appendChild(img);
+  inicio.appendChild(img);
 });
 
-/* MENSAJE COMPLETO */
+/* MENSAJE */
 const mensaje=`Feliz primer mes de novios, mi amor 💕
 
 En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
@@ -196,15 +256,16 @@ Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 let i=0;
 function escribir(){
   if(i<mensaje.length){
-    document.getElementById("texto").innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
+    texto.innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
     i++;
-    setTimeout(escribir,40);
+    setTimeout(escribir,15);
   }
 }
 
 /* ENTRAR */
 function entrar(){
-  document.getElementById("inicio").classList.add("ocultar");
+  inicio.classList.add("ocultar");
+  document.body.classList.add("activo");
   document.querySelectorAll(".dibujoInicio").forEach(e=>e.remove());
   escribir();
   music.play();
@@ -218,10 +279,12 @@ setInterval(()=>{
 
 /* SORPRESA */
 function sorpresa(){
-  for(let i=0;i<50;i++){
+  if(navigator.vibrate) navigator.vibrate([200,100,200]);
+
+  for(let i=0;i<60;i++){
     let e=document.createElement("div");
     e.className="explosion";
-    e.innerText="TE AMO 💖";
+    e.innerText="TE AMO KRISTEL 💖";
     e.style.left=window.innerWidth/2+"px";
     e.style.top=window.innerHeight/2+"px";
     e.style.setProperty("--x",(Math.random()*400-200)+"px");
