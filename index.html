@@ -8,7 +8,7 @@
 body{
   margin:0;
   font-family:Arial;
-  background:radial-gradient(circle,#1a1a2e,#0f0f1a);
+  background:black;
   color:white;
   text-align:center;
   overflow:hidden;
@@ -29,104 +29,87 @@ body{
 
 .foto{
   width:90%;
-  max-width:350px;
+  max-width:300px;
   border-radius:20px;
-  animation:zoom 6s infinite alternate;
   cursor:pointer;
 }
 
-@keyframes zoom{
-  from{transform:scale(1);}
-  to{transform:scale(1.1);}
-}
-
-.tituloInicio{
-  color:#ff4d6d;
-  font-size:28px;
-  margin-top:20px;
-  animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.05);}
-  100%{transform:scale(1);}
-}
-
 .ocultar{
-  animation:fadeZoom 1.2s forwards;
+  animation:fade 1s forwards;
 }
-@keyframes fadeZoom{
-  to{opacity:0;transform:scale(1.2);visibility:hidden;}
-}
-
-/* CARD */
-.card{
-  backdrop-filter:blur(10px);
-  background:rgba(255,255,255,0.1);
-  padding:25px;
-  border-radius:20px;
-  width:85%;
-  margin:auto;
-  margin-top:30px;
+@keyframes fade{
+  to{opacity:0;visibility:hidden;}
 }
 
 /* TEXTO */
 #texto{
   text-align:left;
+  width:85%;
+  margin:auto;
   line-height:1.6;
-  text-shadow:0 0 5px pink;
 }
 
 /* BOTONES */
 button{
-  margin-top:20px;
   padding:12px;
-  border-radius:20px;
+  margin-top:15px;
   border:none;
+  border-radius:20px;
   background:#ff4d6d;
   color:white;
+}
+
+/* ESTRELLAS */
+.star{
+  position:fixed;
+  width:2px;
+  height:2px;
+  background:white;
 }
 
 /* LLUVIA */
 .rain{
   position:fixed;
   top:-20px;
-  font-size:14px;
   animation:fall linear forwards;
 }
 @keyframes fall{
   to{transform:translateY(110vh);opacity:0;}
 }
 
+/* IMÁGENES */
+.imgFall{
+  position:fixed;
+  top:-60px;
+  pointer-events:auto;
+  animation:fall linear forwards;
+}
+
 /* CORAZONES */
 .heart{
   position:fixed;
-  animation:floatUp 1.3s forwards;
+  animation:floatUp 1.2s forwards;
 }
 @keyframes floatUp{
-  to{transform:translateY(-120px);opacity:0;}
+  to{transform:translateY(-100px);opacity:0;}
 }
 
-/* EXPLOSION */
+/* EXPLOSIÓN */
 .explosion{
   position:fixed;
-  font-weight:bold;
+  font-size:22px;
   color:#ff4d6d;
-  animation:boom 1s ease-out forwards;
+  animation:boom 1s forwards;
 }
 @keyframes boom{
-  to{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
+  to{transform:translate(var(--x),var(--y));opacity:0;}
 }
 
 /* FUEGOS */
-.firework{
+.fire{
   position:fixed;
-  font-size:28px;
-  animation:explode 1s forwards;
-}
-@keyframes explode{
-  to{transform:scale(1.8);opacity:0;}
+  font-size:26px;
+  animation:boom 1s forwards;
 }
 </style>
 </head>
@@ -135,40 +118,32 @@ button{
 
 <div id="inicio">
   <img src="foto.jpg" class="foto" id="fotoInicio">
-  <h1 class="tituloInicio">Para ti mi amor 💕</h1>
-  <button onclick="entrar()">Leer mensaje 💕</button>
+  <h2>Para ti mi amor 💕</h2>
+  <button onclick="entrar()">Leer mensaje 💖</button>
 </div>
 
 <h2 id="contador"></h2>
 
-<div class="card">
-<h1>Feliz primer mes mi amor 💕</h1>
 <p id="texto"></p>
 
 <audio id="music" loop>
 <source src="mi-linda-mujer.mp3">
 </audio>
 
-<audio id="clickSound">
-<source src="click.mp3">
-</audio>
-
-<button onclick="music.play()">🎵 Nuestra canción</button>
+<button onclick="music.play()">🎵 Música</button>
 <button onclick="sorpresa()">💥 Sorpresa</button>
-</div>
 
 <script>
 
-/* FOTO */
+/* FOTO CAMBIA */
 const fotos=["foto.jpg","foto2.jpg","foto3.jpg"];
-let index=0;
+let f=0;
 fotoInicio.onclick=()=>{
-  index=(index+1)%fotos.length;
-  fotoInicio.src=fotos[index];
-  clickSound.play();
+  f=(f+1)%fotos.length;
+  fotoInicio.src=fotos[f];
 };
 
-/* TEXTO COMPLETO */
+/* TEXTO */
 const mensaje=`En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
 
 No sabes lo feliz que me haces. Aunque no nos veamos todo el tiempo, cada momento contigo en persona es de los más bonitos para mí. Poder hablar contigo, sentir tus abrazos, tus besos y todo lo que compartimos es un sentimiento que no puedo describir con palabras.
@@ -179,78 +154,93 @@ Jamás voy a olvidar el primer día que nos vimos en persona, ese momento en el 
 
 Me enamoré de ti antes de besarte, antes de tocarte, me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona favorita.
 
-Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.
+Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día.
 
-Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante, pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.
+Siempre voy a apoyarte en todo lo que quieras hacer, mi niña.
 
-Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
-
-Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy, y eso es lo que te hace especial para mí.
+Te voy a amar hasta donde tú me lo permitas 💕.
 
 Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 
 let i=0;
-function escribirTexto(){
+function escribir(){
   if(i<mensaje.length){
-    let c=mensaje.charAt(i);
-    texto.innerHTML+=(c=="\n")?"<br><br>":c;
+    texto.innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
     i++;
-    setTimeout(escribirTexto,40);
+    setTimeout(escribir,40);
   }
 }
 
 function entrar(){
   inicio.classList.add("ocultar");
   music.play();
-  escribirTexto();
+  escribir();
 }
 
 /* CONTADOR */
 setInterval(()=>{
-  let inicioF=new Date("2026-03-08");
-  let hoy=new Date();
-  contador.innerText="Llevamos "+Math.floor((hoy-inicioF)/(1000*60*60*24))+" días 💕";
+  let d=Math.floor((new Date()-new Date("2026-03-08"))/(1000*60*60*24));
+  contador.innerText="Llevamos "+d+" días 💕";
 },1000);
 
-/* INTERACCION */
-document.addEventListener("click", e=>{
-  const cosas=[
-    "❤️","💖","💕",
-    "mi niña 🥺💖","mi amor 💕","mi bb ❤️",
-    "mi dormilona 🤭💖","mi mundo 🌎",
-    "mi universo 🌌","mi vida 💞","mi todo 😍"
-  ];
+/* FRASES */
+const frases=[
+"Te amo 💖","Mi niña 💖","Mi amor 💕","Mi bb ❤️","Mi dormilona 🤭💖",
+"Mi mundo 🌎","Mi universo 🌌","Mi vida 💞","Mi todo 😍",
+"Contigo todo es mejor ✨","Eres mi lugar favorito 🥺","Te elegiría siempre 💘"
+];
 
-  let d=document.createElement("div");
-  d.className="heart";
-  d.innerText=cosas[Math.floor(Math.random()*cosas.length)];
-  d.style.left=e.clientX+"px";
-  d.style.top=e.clientY+"px";
-  d.style.fontSize="22px";
-  document.body.appendChild(d);
-  setTimeout(()=>d.remove(),1300);
-});
+/* IMÁGENES */
+const imagenes=[
+"snoopy1.png","snoopy2.png","snoopy3.png",
+"dibujo1.png","dibujo2.png","dibujo3.png"
+];
 
-/* SORPRESA */
-function sorpresa(){
-  if(navigator.vibrate){
-    navigator.vibrate([200,100,200]);
-  }
+setInterval(()=>{
+  let img=document.createElement("img");
+  let tipo=imagenes[Math.floor(Math.random()*imagenes.length)];
+  img.src=tipo;
+  img.className="imgFall";
+  img.style.left=Math.random()*100+"vw";
+  img.style.animationDuration=(4+Math.random()*3)+"s";
+  img.style.width=(40+Math.random()*30)+"px";
 
-  for(let i=0;i<40;i++){
+  img.onclick=(e)=>{
+    if(navigator.vibrate) navigator.vibrate([80,40,80]);
+
     let t=document.createElement("div");
-    t.className="explosion";
-    t.innerText="TE AMO 💖";
-
-    t.style.left=window.innerWidth/2+"px";
-    t.style.top=window.innerHeight/2+"px";
-
-    t.style.setProperty("--x",(Math.random()*300-150)+"px");
-    t.style.setProperty("--y",(Math.random()*300-150)+"px");
+    t.innerText=frases[Math.floor(Math.random()*frases.length)];
+    t.style.position="fixed";
+    t.style.left=e.clientX+"px";
+    t.style.top=e.clientY+"px";
+    t.style.color="#ff4d6d";
+    t.style.animation="floatUp 1.2s forwards";
 
     document.body.appendChild(t);
-    setTimeout(()=>t.remove(),1000);
-  }
+    setTimeout(()=>t.remove(),1200);
+
+    for(let i=0;i<5;i++){
+      let h=document.createElement("div");
+      h.innerText="💖";
+      h.className="heart";
+      h.style.left=e.clientX+"px";
+      h.style.top=e.clientY+"px";
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),1000);
+    }
+  };
+
+  document.body.appendChild(img);
+  setTimeout(()=>img.remove(),7000);
+},900);
+
+/* ESTRELLAS */
+for(let i=0;i<120;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  document.body.appendChild(s);
 }
 
 /* LLUVIA */
@@ -262,18 +252,35 @@ setInterval(()=>{
   r.style.animationDuration=(3+Math.random()*3)+"s";
   document.body.appendChild(r);
   setTimeout(()=>r.remove(),6000);
-},200);
+},300);
 
 /* FUEGOS */
 setInterval(()=>{
   let f=document.createElement("div");
-  f.className="firework";
-  f.innerText=["🎆","💖","✨"][Math.floor(Math.random()*3)];
+  f.className="fire";
+  f.innerText=["🎆","✨","💖"][Math.floor(Math.random()*3)];
   f.style.left=Math.random()*100+"vw";
   f.style.top=Math.random()*100+"vh";
   document.body.appendChild(f);
   setTimeout(()=>f.remove(),1000);
 },2500);
+
+/* SORPRESA */
+function sorpresa(){
+  if(navigator.vibrate) navigator.vibrate([200,100,200]);
+
+  for(let i=0;i<40;i++){
+    let e=document.createElement("div");
+    e.className="explosion";
+    e.innerText="TE AMO 💖";
+    e.style.left=window.innerWidth/2+"px";
+    e.style.top=window.innerHeight/2+"px";
+    e.style.setProperty("--x",(Math.random()*300-150)+"px");
+    e.style.setProperty("--y",(Math.random()*300-150)+"px");
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),1000);
+  }
+}
 
 </script>
 
