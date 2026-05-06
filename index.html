@@ -42,17 +42,22 @@ body.activo{
 /* ORBITA */
 .orbita{
   position:absolute;
-  top:40%;
+  top:45%; 
   left:50%;
-  transform:translate(-50%,-50%);
   width:700px;
   height:700px;
   border-radius:50%;
-  /*animation:rotar 22s linear infinite;
-  z-index:1;*/
+  transform:translate(-50%,-50%);
+  animation:rotar 25s linear infinite;
+  z-index:1;
 }
 @keyframes rotar{
-  to{transform:translate(-50%,-50%) rotate(360deg);}
+  from{
+    transform:translate(-50%,-50%) rotate(0deg);
+  }
+  to{
+    transform:translate(-50%,-50%) rotate(360deg);
+  }
 }
 
 .orbita img{
