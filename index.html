@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para ti mi amor 💕</title>
+<title>Para ti Kristel 💕</title>
 
 <style>
 body{
@@ -13,7 +13,7 @@ body{
   text-align:center;
 }
 
-/* INTRO */
+/* INICIO */
 #inicio{
   position:fixed;
   width:100%;
@@ -34,24 +34,68 @@ body{
   z-index:2;
 }
 
-/* DIBUJOS INICIO */
+/* DIBUJOS */
 .dibujoInicio{
   position:absolute;
-  animation:flotar 6s ease-in-out infinite alternate;
+  z-index:1;
+  animation:flotar 4s ease-in-out infinite alternate;
   cursor:pointer;
 }
 
 @keyframes flotar{
   from{transform:translateY(0);}
-  to{transform:translateY(-30px);}
+  to{transform:translateY(-20px);}
 }
 
-/* OCULTAR */
-.ocultar{
-  animation:fade 1s forwards;
+/* VENTANA PRO */
+.ventana{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
+  padding:20px;
+  border-radius:20px;
+  width:75%;
+  max-width:300px;
+  text-align:center;
+  z-index:2000;
+  animation:aparecer 0.3s forwards;
 }
-@keyframes fade{
-  to{opacity:0;visibility:hidden;}
+
+.ventana h3{
+  margin:0;
+  font-size:22px;
+}
+
+.ventana p{
+  margin-top:10px;
+  font-size:18px;
+}
+
+/* LATIDO */
+.ventana{
+  animation:aparecer 0.3s forwards, latido 1s infinite;
+}
+
+@keyframes aparecer{
+  to{transform:translate(-50%,-50%) scale(1);}
+}
+
+@keyframes latido{
+  0%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-50%) scale(1.05);}
+  100%{transform:translate(-50%,-50%) scale(1);}
+}
+
+/* FONDO */
+.fondoBlur{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(5px);
+  z-index:1999;
 }
 
 /* TEXTO */
@@ -72,27 +116,10 @@ button{
   color:white;
 }
 
-/* CORAZONES */
-.heart{
-  position:fixed;
-  animation:floatUp 1.2s forwards;
-}
-@keyframes floatUp{
-  to{transform:translateY(-100px);opacity:0;}
-}
-
-/* TEXTO CLICK */
-.textoClick{
-  position:fixed;
-  color:#ff4d6d;
-  font-size:20px;
-  animation:floatUp 1.3s forwards;
-}
-
 /* EXPLOSION */
 .explosion{
   position:fixed;
-  font-size:24px;
+  font-size:26px;
   color:#ff4d6d;
   animation:boom 1s forwards;
 }
@@ -104,10 +131,9 @@ button{
 
 <body>
 
-<!-- INICIO -->
 <div id="inicio">
   <img src="foto.jpg" class="foto">
-  <h2>Para ti mi amor 💕</h2>
+  <h2>Para ti Kristel 💕</h2>
   <button onclick="entrar()">Leer mensaje 💖</button>
 </div>
 
@@ -125,33 +151,36 @@ button{
 
 /* FRASES */
 const frases=[
-"Te amo 💖","Mi niña 💖","Mi amor 💕","Mi bb ❤️",
-"Mi dormilona 🤭💖","Mi mundo 🌎","Mi universo 🌌",
-"Mi vida 💞","Mi todo 😍","Eres mi todo ✨",
-"Te elegiría siempre 💘","Mi princesa 💕"
+"Te amo Kristel 💖","Eres mi todo 💕","Mi niña hermosa 😍",
+"Mi universo 🌌","Mi vida 💞","Mi todo 💘",
+"Siempre tú 💖","Eres lo mejor ✨"
 ];
 
-/* EFECTO CLICK */
-function efectoClick(x,y){
+/* VENTANA */
+function efectoClick(){
   if(navigator.vibrate) navigator.vibrate([80,40,80]);
 
-  let t=document.createElement("div");
-  t.className="textoClick";
-  t.innerText=frases[Math.floor(Math.random()*frases.length)];
-  t.style.left=x+"px";
-  t.style.top=y+"px";
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),1300);
+  let fondo=document.createElement("div");
+  fondo.className="fondoBlur";
 
-  for(let i=0;i<5;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerText="💖";
-    h.style.left=x+"px";
-    h.style.top=y+"px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),1000);
+  let ventana=document.createElement("div");
+  ventana.className="ventana";
+
+  ventana.innerHTML=`
+    <h3>Para ti Kristel 💕</h3>
+    <p>${frases[Math.floor(Math.random()*frases.length)]}</p>
+  `;
+
+  document.body.appendChild(fondo);
+  document.body.appendChild(ventana);
+
+  function cerrar(){
+    ventana.remove();
+    fondo.remove();
   }
+
+  fondo.onclick=cerrar;
+  ventana.onclick=cerrar;
 }
 
 /* IMÁGENES */
@@ -160,19 +189,26 @@ const imagenes=[
 "dibujo1.png","dibujo2.png","dibujo3.png"
 ];
 
-/* DIBUJOS EN INICIO */
-imagenes.forEach(src=>{
+/* CÍRCULO */
+const centroX = window.innerWidth / 2;
+const centroY = window.innerHeight / 2;
+const radio = 180;
+
+imagenes.forEach((src,i)=>{
+  let angulo = (i / imagenes.length) * (2 * Math.PI);
+
+  let x = centroX + radio * Math.cos(angulo);
+  let y = centroY + radio * Math.sin(angulo);
+
   let img=document.createElement("img");
   img.src=src;
   img.className="dibujoInicio";
 
-  img.style.left=Math.random()*85+"vw";
-  img.style.top=Math.random()*85+"vh";
-  img.style.width=(120+Math.random()*100)+"px";
+  img.style.left=(x-60)+"px";
+  img.style.top=(y-60)+"px";
+  img.style.width="120px";
 
-  img.onclick=(e)=>{
-    efectoClick(e.clientX,e.clientY);
-  };
+  img.onclick=()=>efectoClick();
 
   document.getElementById("inicio").appendChild(img);
 });
@@ -188,17 +224,9 @@ Te amo con todo mi corazón. Me encanta tu manera de ser conmigo, me gusta que s
 
 Jamás voy a olvidar el primer día que nos vimos en persona, ese momento en el parque, nuestro primer abrazo y nuestro primer beso. Lo llevo guardado en mi corazón ❤️.
 
-Me enamoré de ti antes de besarte, antes de tocarte, me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo, jugando en llamadas y compartiendo momentos juntos. Me enamoré porque sentí que eras mi persona favorita.
+Me enamoré de ti antes de besarte, antes de tocarte, me enamoré cuando hablábamos todos los días por chat, cuando poco a poco nos fuimos conociendo.
 
-Conocerte fue y sigue siendo lo mejor que me ha pasado en la vida. Sé que no soy perfecto, que tengo errores, pero contigo quiero aprender y ser mejor cada día, para que nuestra relación sea cada vez más bonita.
-
-Siempre voy a apoyarte en todo lo que quieras hacer, mi niña. Quiero seguir adelante, pero contigo a mi lado. Sé que no todo será fácil y que habrá problemas, pero los vamos a superar juntos.
-
-Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
-
-Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy, y eso es lo que te hace especial para mí.
-
-Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
+Conocerte fue lo mejor que me ha pasado 💕`;
 
 let i=0;
 function escribir(){
@@ -211,11 +239,8 @@ function escribir(){
 
 /* ENTRAR */
 function entrar(){
-  document.getElementById("inicio").classList.add("ocultar");
-
-  // eliminar dibujos
+  inicio.classList.add("ocultar");
   document.querySelectorAll(".dibujoInicio").forEach(e=>e.remove());
-
   music.play();
   escribir();
 }
@@ -230,10 +255,10 @@ setInterval(()=>{
 function sorpresa(){
   if(navigator.vibrate) navigator.vibrate([200,100,200]);
 
-  for(let i=0;i<50;i++){
+  for(let i=0;i<60;i++){
     let e=document.createElement("div");
     e.className="explosion";
-    e.innerText="TE AMO 💖";
+    e.innerText="TE AMO KRISTEL 💖";
     e.style.left=window.innerWidth/2+"px";
     e.style.top=window.innerHeight/2+"px";
     e.style.setProperty("--x",(Math.random()*400-200)+"px");
