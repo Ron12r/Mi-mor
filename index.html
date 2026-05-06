@@ -7,10 +7,24 @@
 <style>
 body{
   margin:0;
-  font-family:Arial;
   background:black;
   color:white;
+  font-family:Arial;
   text-align:center;
+  overflow-x:hidden;
+}
+
+/* ESTRELLAS */
+.estrella{
+  position:fixed;
+  width:2px;
+  height:2px;
+  background:white;
+  animation:parpadeo 2s infinite;
+}
+
+@keyframes parpadeo{
+  50%{opacity:0.3;}
 }
 
 /* INICIO */
@@ -18,84 +32,45 @@ body{
   position:fixed;
   width:100%;
   height:100vh;
-  background:black;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  background:black;
   z-index:999;
   overflow:hidden;
 }
 
+/* FOTO */
 .foto{
-  width:90%;
-  max-width:300px;
+  width:95%;
+  max-width:320px;
   border-radius:20px;
   z-index:2;
+  margin-bottom:10px;
 }
 
 /* DIBUJOS */
 .dibujoInicio{
   position:absolute;
   z-index:1;
-  animation:flotar 4s ease-in-out infinite alternate;
+  animation:flotar 5s ease-in-out infinite alternate;
   cursor:pointer;
 }
 
 @keyframes flotar{
   from{transform:translateY(0);}
-  to{transform:translateY(-20px);}
+  to{transform:translateY(-25px);}
 }
 
-/* VENTANA PRO */
-.ventana{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(0.8);
-  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
-  padding:20px;
+/* BOTÓN */
+button{
+  padding:12px;
+  border:none;
   border-radius:20px;
-  width:75%;
-  max-width:300px;
-  text-align:center;
-  z-index:2000;
-  animation:aparecer 0.3s forwards;
-}
-
-.ventana h3{
-  margin:0;
-  font-size:22px;
-}
-
-.ventana p{
+  background:#ff4d6d;
+  color:white;
   margin-top:10px;
-  font-size:18px;
-}
-
-/* LATIDO */
-.ventana{
-  animation:aparecer 0.3s forwards, latido 1s infinite;
-}
-
-@keyframes aparecer{
-  to{transform:translate(-50%,-50%) scale(1);}
-}
-
-@keyframes latido{
-  0%{transform:translate(-50%,-50%) scale(1);}
-  50%{transform:translate(-50%,-50%) scale(1.05);}
-  100%{transform:translate(-50%,-50%) scale(1);}
-}
-
-/* FONDO */
-.fondoBlur{
-  position:fixed;
-  width:100%;
-  height:100vh;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(5px);
-  z-index:1999;
 }
 
 /* TEXTO */
@@ -106,25 +81,24 @@ body{
   line-height:1.6;
 }
 
-/* BOTONES */
-button{
-  padding:12px;
-  margin-top:15px;
-  border:none;
-  border-radius:20px;
-  background:#ff4d6d;
-  color:white;
-}
-
 /* EXPLOSION */
 .explosion{
   position:fixed;
-  font-size:26px;
   color:#ff4d6d;
+  font-size:24px;
   animation:boom 1s forwards;
 }
+
 @keyframes boom{
   to{transform:translate(var(--x),var(--y));opacity:0;}
+}
+
+/* OCULTAR */
+.ocultar{
+  animation:fade 1s forwards;
+}
+@keyframes fade{
+  to{opacity:0;visibility:hidden;}
 }
 </style>
 </head>
@@ -149,38 +123,21 @@ button{
 
 <script>
 
+/* ⭐ ESTRELLAS */
+for(let i=0;i<80;i++){
+  let e=document.createElement("div");
+  e.className="estrella";
+  e.style.left=Math.random()*100+"vw";
+  e.style.top=Math.random()*100+"vh";
+  document.body.appendChild(e);
+}
+
 /* FRASES */
-const frases=[
-"Te amo Kristel 💖","Eres mi todo 💕","Mi niña hermosa 😍",
-"Mi universo 🌌","Mi vida 💞","Mi todo 💘",
-"Siempre tú 💖","Eres lo mejor ✨"
-];
+const frases=["Te amo 💖","Mi niña 💕","Mi vida 💞","Mi todo 😍"];
 
 /* VENTANA */
 function efectoClick(){
-  if(navigator.vibrate) navigator.vibrate([80,40,80]);
-
-  let fondo=document.createElement("div");
-  fondo.className="fondoBlur";
-
-  let ventana=document.createElement("div");
-  ventana.className="ventana";
-
-  ventana.innerHTML=`
-    <h3>Para ti Kristel 💕</h3>
-    <p>${frases[Math.floor(Math.random()*frases.length)]}</p>
-  `;
-
-  document.body.appendChild(fondo);
-  document.body.appendChild(ventana);
-
-  function cerrar(){
-    ventana.remove();
-    fondo.remove();
-  }
-
-  fondo.onclick=cerrar;
-  ventana.onclick=cerrar;
+  alert(frases[Math.floor(Math.random()*frases.length)]);
 }
 
 /* IMÁGENES */
@@ -189,16 +146,16 @@ const imagenes=[
 "dibujo1.png","dibujo2.png","dibujo3.png"
 ];
 
-/* CÍRCULO */
-const centroX = window.innerWidth / 2;
-const centroY = window.innerHeight / 2;
-const radio = 180;
+/* 🔥 CÍRCULO MÁS GRANDE */
+const centroX = window.innerWidth/2;
+const centroY = window.innerHeight/2;
+const radio = 240; // MÁS ALEJADO
 
 imagenes.forEach((src,i)=>{
-  let angulo = (i / imagenes.length) * (2 * Math.PI);
+  let angulo = (i/imagenes.length)*(2*Math.PI);
 
-  let x = centroX + radio * Math.cos(angulo);
-  let y = centroY + radio * Math.sin(angulo);
+  let x = centroX + radio*Math.cos(angulo);
+  let y = centroY + radio*Math.sin(angulo);
 
   let img=document.createElement("img");
   img.src=src;
@@ -206,9 +163,9 @@ imagenes.forEach((src,i)=>{
 
   img.style.left=(x-60)+"px";
   img.style.top=(y-60)+"px";
-  img.style.width="120px";
+  img.style.width="130px"; // MÁS GRANDE
 
-  img.onclick=()=>efectoClick();
+  img.onclick=efectoClick;
 
   document.getElementById("inicio").appendChild(img);
 });
@@ -239,18 +196,18 @@ Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
 let i=0;
 function escribir(){
   if(i<mensaje.length){
-    texto.innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
+    document.getElementById("texto").innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
     i++;
-    setTimeout(escribir,45);
+    setTimeout(escribir,40);
   }
 }
 
 /* ENTRAR */
 function entrar(){
-  inicio.classList.add("ocultar");
+  document.getElementById("inicio").classList.add("ocultar");
   document.querySelectorAll(".dibujoInicio").forEach(e=>e.remove());
-  music.play();
   escribir();
+  music.play();
 }
 
 /* CONTADOR */
@@ -261,12 +218,10 @@ setInterval(()=>{
 
 /* SORPRESA */
 function sorpresa(){
-  if(navigator.vibrate) navigator.vibrate([200,100,200]);
-
-  for(let i=0;i<60;i++){
+  for(let i=0;i<50;i++){
     let e=document.createElement("div");
     e.className="explosion";
-    e.innerText="TE AMO KRISTEL 💖";
+    e.innerText="TE AMO 💖";
     e.style.left=window.innerWidth/2+"px";
     e.style.top=window.innerHeight/2+"px";
     e.style.setProperty("--x",(Math.random()*400-200)+"px");
