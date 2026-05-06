@@ -42,22 +42,19 @@ body.activo{
 /* ORBITA */
 .orbita{
   position:absolute;
-  top:45%; 
+  top:45%;
   left:50%;
   width:700px;
   height:700px;
   border-radius:50%;
   transform:translate(-50%,-50%);
   animation:rotar 25s linear infinite;
-  z-index:1;
+  z-index:2;
 }
+
 @keyframes rotar{
-  from{
-    transform:translate(-50%,-50%) rotate(0deg);
-  }
-  to{
-    transform:translate(-50%,-50%) rotate(360deg);
-  }
+  from{transform:translate(-50%,-50%) rotate(0deg);}
+  to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
 .orbita img{
@@ -67,6 +64,7 @@ body.activo{
   left:50%;
   transform-origin:center;
   cursor:pointer;
+  pointer-events:auto;
 }
 
 /* CAIDA DIBUJOS */
@@ -97,7 +95,8 @@ body.activo{
   max-width:300px;
   border-radius:20px;
   position:relative;
-  z-index:2;
+  z-index:5; /* 👈 por encima */
+  cursor:pointer;
 }
 
 /* BOTONES */
@@ -109,7 +108,7 @@ button{
   color:white;
   margin-top:10px;
   position:relative;
-  z-index:3;
+  z-index:6;
 }
 
 /* TEXTO */
@@ -171,13 +170,13 @@ button{
 <body>
 
 <div id="inicio">
-  <img src="foto.jpg" class="foto">
+  <img src="foto.jpg" class="foto" onclick="alert('Eres lo mejor que me ha pasado 💖')">
   <h2>Para ti Kristel 💕</h2>
   <button onclick="entrar()">Leer mensaje 💖</button>
 </div>
 
 <h2 id="contador"></h2>
-<p id="texto">Cargando mensaje 💖✨ </p>
+<p id="texto"></p>
 
 <audio id="music" loop>
 <source src="mi-linda-mujer.mp3">
@@ -249,7 +248,7 @@ imgs.forEach((src,i)=>{
   img.src=src;
 
   let ang=(i/imgs.length)*360;
-  img.style.transform=`rotate(${ang}deg) translateY(-360px) rotate(-${ang}deg)`;
+  img.style.transform=`rotate(${ang}deg) translateY(-400px) rotate(-${ang}deg)`;
 
   img.onclick=efectoClick;
 
@@ -298,7 +297,7 @@ function escribir(){
   if(i<mensaje.length){
     texto.innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
     i++;
-    setTimeout(escribir,60);
+    setTimeout(escribir,15);
   }
 }
 
@@ -313,7 +312,7 @@ function entrar(){
 
 /* CONTADOR */
 setInterval(()=>{
-  let d=Math.floor((new Date()-new Date("2026-03-30"))/(1000*60*60*24));
+  let d=Math.floor((new Date()-new Date("2026-03-08"))/(1000*60*60*24));
   contador.innerText="Llevamos "+d+" días juntos 💕";
 },1000);
 
