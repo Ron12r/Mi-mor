@@ -11,7 +11,6 @@ body{
   background:black;
   color:white;
   text-align:center;
-  overflow:hidden;
 }
 
 /* INTRO */
@@ -25,6 +24,7 @@ body{
   justify-content:center;
   align-items:center;
   z-index:999;
+  overflow:hidden;
 }
 
 .foto{
@@ -34,11 +34,10 @@ body{
   z-index:2;
 }
 
-/* IMÁGENES INICIO */
+/* DIBUJOS INICIO */
 .dibujoInicio{
-  position:fixed;
+  position:absolute;
   animation:flotar 6s ease-in-out infinite alternate;
-  z-index:1;
   cursor:pointer;
 }
 
@@ -57,9 +56,9 @@ body{
 
 /* TEXTO */
 #texto{
-  text-align:left;
   width:85%;
   margin:auto;
+  text-align:left;
   line-height:1.6;
 }
 
@@ -73,16 +72,6 @@ button{
   color:white;
 }
 
-/* CAÍDA */
-.imgFall{
-  position:fixed;
-  top:-60px;
-  animation:fall linear forwards;
-}
-@keyframes fall{
-  to{transform:translateY(110vh);opacity:0;}
-}
-
 /* CORAZONES */
 .heart{
   position:fixed;
@@ -92,7 +81,7 @@ button{
   to{transform:translateY(-100px);opacity:0;}
 }
 
-/* TEXTO FLOTANTE */
+/* TEXTO CLICK */
 .textoClick{
   position:fixed;
   color:#ff4d6d;
@@ -100,7 +89,7 @@ button{
   animation:floatUp 1.3s forwards;
 }
 
-/* EXPLOSIÓN */
+/* EXPLOSION */
 .explosion{
   position:fixed;
   font-size:24px;
@@ -110,19 +99,12 @@ button{
 @keyframes boom{
   to{transform:translate(var(--x),var(--y));opacity:0;}
 }
-
-/* ESTRELLAS */
-.star{
-  position:fixed;
-  width:2px;
-  height:2px;
-  background:white;
-}
 </style>
 </head>
 
 <body>
 
+<!-- INICIO -->
 <div id="inicio">
   <img src="foto.jpg" class="foto">
   <h2>Para ti mi amor 💕</h2>
@@ -145,8 +127,8 @@ button{
 const frases=[
 "Te amo 💖","Mi niña 💖","Mi amor 💕","Mi bb ❤️",
 "Mi dormilona 🤭💖","Mi mundo 🌎","Mi universo 🌌",
-"Mi vida 💞","Mi todo 😍","Contigo todo es mejor ✨",
-"Eres mi lugar favorito 🥺","Te elegiría siempre 💘"
+"Mi vida 💞","Mi todo 😍","Eres mi todo ✨",
+"Te elegiría siempre 💘","Mi princesa 💕"
 ];
 
 /* EFECTO CLICK */
@@ -161,7 +143,7 @@ function efectoClick(x,y){
   document.body.appendChild(t);
   setTimeout(()=>t.remove(),1300);
 
-  for(let i=0;i<6;i++){
+  for(let i=0;i<5;i++){
     let h=document.createElement("div");
     h.className="heart";
     h.innerText="💖";
@@ -178,47 +160,22 @@ const imagenes=[
 "dibujo1.png","dibujo2.png","dibujo3.png"
 ];
 
-/* INICIO IMÁGENES */
+/* DIBUJOS EN INICIO */
 imagenes.forEach(src=>{
   let img=document.createElement("img");
   img.src=src;
   img.className="dibujoInicio";
-  img.style.left=Math.random()*90+"vw";
-  img.style.top=Math.random()*90+"vh";
-  img.style.width=(90+Math.random()*60)+"px";
+
+  img.style.left=Math.random()*85+"vw";
+  img.style.top=Math.random()*85+"vh";
+  img.style.width=(120+Math.random()*100)+"px";
 
   img.onclick=(e)=>{
     efectoClick(e.clientX,e.clientY);
   };
 
-  document.body.appendChild(img);
+  document.getElementById("inicio").appendChild(img);
 });
-
-/* CAÍDA */
-setInterval(()=>{
-  let img=document.createElement("img");
-  img.src=imagenes[Math.floor(Math.random()*imagenes.length)];
-  img.className="imgFall";
-  img.style.left=Math.random()*100+"vw";
-  img.style.animationDuration=(4+Math.random()*3)+"s";
-  img.style.width=(40+Math.random()*30)+"px";
-
-  img.onclick=(e)=>{
-    efectoClick(e.clientX,e.clientY);
-  };
-
-  document.body.appendChild(img);
-  setTimeout(()=>img.remove(),7000);
-},900);
-
-/* ESTRELLAS */
-for(let i=0;i<100;i++){
-  let s=document.createElement("div");
-  s.className="star";
-  s.style.left=Math.random()*100+"vw";
-  s.style.top=Math.random()*100+"vh";
-  document.body.appendChild(s);
-}
 
 /* MENSAJE COMPLETO */
 const mensaje=`Feliz primer mes de novios, mi amor 💕
@@ -252,8 +209,13 @@ function escribir(){
   }
 }
 
+/* ENTRAR */
 function entrar(){
-  inicio.classList.add("ocultar");
+  document.getElementById("inicio").classList.add("ocultar");
+
+  // eliminar dibujos
+  document.querySelectorAll(".dibujoInicio").forEach(e=>e.remove());
+
   music.play();
   escribir();
 }
