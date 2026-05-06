@@ -172,7 +172,7 @@ button{
 </div>
 
 <h2 id="contador"></h2>
-<p id="texto">Cargando mensaje... 💖</p>
+<p id="texto">Cargando mensaje 💖✨ </p>
 
 <audio id="music" loop>
 <source src="mi-linda-mujer.mp3">
@@ -293,7 +293,7 @@ function escribir(){
   if(i<mensaje.length){
     texto.innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
     i++;
-    setTimeout(escribir,15);
+    setTimeout(escribir,60);
   }
 }
 
@@ -308,7 +308,7 @@ function entrar(){
 
 /* CONTADOR */
 setInterval(()=>{
-  let d=Math.floor((new Date()-new Date("2026-03-08"))/(1000*60*60*24));
+  let d=Math.floor((new Date()-new Date("2026-03-30"))/(1000*60*60*24));
   contador.innerText="Llevamos "+d+" días juntos 💕";
 },1000);
 
