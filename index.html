@@ -5,6 +5,7 @@
 <title>Para ti Kristel 💕</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Arial;
@@ -15,10 +16,11 @@ body{
 }
 
 body.activo{
-  background: radial-gradient(circle, #1a001f, #000);
+  background:radial-gradient(circle,#1a001f,#000);
 }
 
 /* ESTRELLAS */
+
 .estrella{
   position:fixed;
   width:2px;
@@ -26,58 +28,34 @@ body.activo{
   background:white;
   animation:parpadeo 2s infinite;
 }
-@keyframes parpadeo{50%{opacity:0.3;}}
+
+@keyframes parpadeo{
+  50%{
+    opacity:0.3;
+  }
+}
 
 /* CORAZONES */
+
 .corazon{
   position:fixed;
   color:#ff4d6d;
   animation:caer 6s linear forwards;
+  z-index:1;
 }
+
 @keyframes caer{
-  from{transform:translateY(-10vh);}
-  to{transform:translateY(110vh);}
-}
+  from{
+    transform:translateY(-10vh);
+  }
 
-/* ORBITA */
-.orbita{
-  position:absolute;
-  top:45%;
-  left:50%;
-  width:700px;
-  height:700px;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  animation:rotar 25s linear infinite;
-  z-index:2;
-}
-
-@keyframes rotar{
-  from{transform:translate(-50%,-50%) rotate(0deg);}
-  to{transform:translate(-50%,-50%) rotate(360deg);}
-}
-
-.orbita img{
-  position:absolute;
-  width:120px;
-  top:50%;
-  left:50%;
-  transform-origin:center;
-  cursor:pointer;
-  pointer-events:auto;
-}
-
-/* CAIDA DIBUJOS */
-.caida{
-  position:fixed;
-  animation:caerDibujo 6s linear forwards;
-}
-@keyframes caerDibujo{
-  from{transform:translateY(-10vh);}
-  to{transform:translateY(110vh);}
+  to{
+    transform:translateY(110vh);
+  }
 }
 
 /* INICIO */
+
 #inicio{
   position:fixed;
   width:100%;
@@ -86,41 +64,90 @@ body.activo{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  z-index:999;
   background:black;
+  z-index:999;
 }
+
+/* FOTO PRINCIPAL */
 
 .foto{
   width:90%;
-  max-width:300px;
+  max-width:280px;
   border-radius:20px;
   position:relative;
-  z-index:5; /* 👈 por encima */
+  z-index:5;
+  object-fit:cover;
+  box-shadow:0 0 25px #ff4d6d;
+  transition:1s;
+}
+
+/* ORBITA */
+
+.orbita{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:420px;
+  height:420px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  animation:rotar 20s linear infinite;
+  z-index:4;
+  pointer-events:none;
+}
+
+@keyframes rotar{
+  from{
+    transform:translate(-50%,-50%) rotate(0deg);
+  }
+
+  to{
+    transform:translate(-50%,-50%) rotate(360deg);
+  }
+}
+
+.orbita img{
+  position:absolute;
+  width:85px;
+  top:50%;
+  left:50%;
+  transform-origin:center;
   cursor:pointer;
+  pointer-events:auto;
+  transition:0.3s;
+}
+
+.orbita img:hover{
+  transform:scale(1.1);
 }
 
 /* BOTONES */
+
 button{
-  padding:12px;
+  padding:12px 20px;
   border:none;
   border-radius:20px;
   background:#ff4d6d;
   color:white;
   margin-top:10px;
+  font-size:16px;
+  z-index:10;
   position:relative;
-  z-index:6;
 }
 
 /* TEXTO */
+
 #texto{
   width:85%;
   margin:auto;
-  text-align:left;
-  line-height:1.6;
+  line-height:1.7;
   margin-top:20px;
+  text-align:left;
+  font-size:18px;
 }
 
 /* VENTANA */
+
 .fondoBlur{
   position:fixed;
   width:100%;
@@ -144,38 +171,78 @@ button{
   animation:zoom 0.3s forwards;
   z-index:2001;
 }
+
 @keyframes zoom{
-  to{transform:translate(-50%,-50%) scale(1);}
+  to{
+    transform:translate(-50%,-50%) scale(1);
+  }
+}
+
+/* DIBUJOS CAYENDO */
+
+.caida{
+  position:fixed;
+  animation:caerDibujo 6s linear forwards;
+  z-index:2;
+}
+
+@keyframes caerDibujo{
+  from{
+    transform:translateY(-10vh);
+  }
+
+  to{
+    transform:translateY(110vh);
+  }
 }
 
 /* EXPLOSION */
+
 .explosion{
   position:fixed;
   animation:boom 1s forwards;
+  z-index:3000;
 }
+
 @keyframes boom{
-  to{transform:translate(var(--x),var(--y));opacity:0;}
+  to{
+    transform:translate(var(--x),var(--y));
+    opacity:0;
+  }
 }
 
 /* OCULTAR */
+
 .ocultar{
   animation:fade 1s forwards;
 }
+
 @keyframes fade{
-  to{opacity:0;visibility:hidden;}
+  to{
+    opacity:0;
+    visibility:hidden;
+  }
 }
+
 </style>
 </head>
 
 <body>
 
 <div id="inicio">
-  <img src="foto.jpg" class="foto" onclick="alert('Eres lo mejor que me ha pasado 💖')">
+
+  <div class="orbita" id="orbita"></div>
+
+  <img src="foto1.jpg" id="fotoPrincipal" class="foto">
+
   <h2>Para ti Kristel 💕</h2>
+
   <button onclick="entrar()">Leer mensaje 💖</button>
+
 </div>
 
 <h2 id="contador"></h2>
+
 <p id="texto"></p>
 
 <audio id="music" loop>
@@ -183,147 +250,296 @@ button{
 </audio>
 
 <button onclick="music.play()">🎵 Música</button>
+
 <button onclick="sorpresa()">💥 Sorpresa</button>
 
 <script>
 
 /* ESTRELLAS */
+
 for(let i=0;i<100;i++){
+
   let e=document.createElement("div");
+
   e.className="estrella";
+
   e.style.left=Math.random()*100+"vw";
+
   e.style.top=Math.random()*100+"vh";
+
   document.body.appendChild(e);
 }
 
 /* CORAZONES */
+
 setInterval(()=>{
+
   let c=document.createElement("div");
+
   c.className="corazon";
+
   c.innerText="❤️";
+
   c.style.left=Math.random()*100+"vw";
+
   document.body.appendChild(c);
+
   setTimeout(()=>c.remove(),6000);
+
 },600);
 
 /* FRASES */
+
 const frases=[
+
 "Te amo mucho mi Kristel 💖",
-"eres mi dormilona 🤭 💖",
-"bañate amorr , jsjs mentira 🫢❤️",
+
+"eres mi dormilona 🤭💖",
+
+"bañate amorr jsjs mentira 🫢❤️",
+
 "eres mi universo 🌌",
+
 "te amoo mushooteeee 🥹💖✨",
+
 "Eres mi felicidad 💕",
+
 "Mi niña hermosa 😍",
+
 "te amare hasta donde me lo permitas 💘",
+
 "Mi lugar favorito eres tú 💞",
+
 "mi vida 🥹❤️",
-"solo con estar xontigo soy muy feliz 😍💗",
+
+"solo con estar contigo soy muy feliz 😍💗",
+
 "te amoo solo a tiiii mi bb chiquita 🥹❤️✨",
+
 "mi bella durmiente 👸❤️",
-"eres mi mundo 🌍 💗",
+
+"eres mi mundo 🌍💗",
+
 "te quelooo mushoo mi amorchito 🥹💖✨",
+
 "me haces tan feliz 🥹💗",
-"eres todo lo q nevesito 🥺💗",
+
+"eres todo lo q necesito 🥺💗",
+
 "gracias por aceptarme mi niña 🥹💖✨",
-"bañaete mi vida , ya le toca jsjs 🙈💖",
+
+"bañaete mi vida ya le toca jsjs 🙈💖"
+
 ];
 
-/* VENTANA */
-function efectoClick(){
-  if(navigator.vibrate) navigator.vibrate(100);
+/* IMAGENES */
 
-  let fondo=document.createElement("div");
-  fondo.className="fondoBlur";
+const imgs=[
 
-  let v=document.createElement("div");
-  v.className="ventana";
-  v.innerHTML=`<h3>Para ti 💕</h3><p>${frases[Math.random()*frases.length|0]}</p>`;
+"snoopy1.png",
+"snoopy2.png",
+"snoopy3.png",
+"dibujo1.png",
+"dibujo2.png",
+"dibujo3.png"
 
-  document.body.appendChild(fondo);
-  document.body.appendChild(v);
-
-  fondo.onclick=()=>{fondo.remove();v.remove();};
-  v.onclick=()=>{fondo.remove();v.remove();};
-}
+];
 
 /* ORBITA */
-const imgs=["snoopy1.png","snoopy2.png","snoopy3.png","dibujo1.png","dibujo2.png","dibujo3.png"];
 
-const orbita=document.createElement("div");
-orbita.className="orbita";
+const orbita=document.getElementById("orbita");
 
 imgs.forEach((src,i)=>{
+
   let img=document.createElement("img");
+
   img.src=src;
 
   let ang=(i/imgs.length)*360;
-  img.style.transform=`rotate(${ang}deg) translateY(-400px) rotate(-${ang}deg)`;
+
+  img.style.transform=
+  `rotate(${ang}deg) translateY(-210px) rotate(-${ang}deg)`;
 
   img.onclick=efectoClick;
 
   orbita.appendChild(img);
 });
 
-document.getElementById("inicio").appendChild(orbita);
+/* VENTANA */
+
+function efectoClick(e){
+
+  if(navigator.vibrate){
+    navigator.vibrate(100);
+  }
+
+  let fondo=document.createElement("div");
+
+  fondo.className="fondoBlur";
+
+  let v=document.createElement("div");
+
+  v.className="ventana";
+
+  v.innerHTML=`
+
+  <img src="${e.target.src}"
+  style="width:120px;border-radius:15px;margin-bottom:10px;box-shadow:0 0 15px white;">
+
+  <h3>Para ti 💕</h3>
+
+  <p>${frases[Math.random()*frases.length|0]}</p>
+
+  `;
+
+  document.body.appendChild(fondo);
+
+  document.body.appendChild(v);
+
+  fondo.onclick=()=>{
+    fondo.remove();
+    v.remove();
+  };
+
+  v.onclick=()=>{
+    fondo.remove();
+    v.remove();
+  };
+}
+
+/* FOTOS CAMBIANDO */
+
+const fotos=[
+
+"foto1.jpg",
+"foto2.jpg",
+"foto3.jpg"
+
+];
+
+let fotoActual=0;
+
+setInterval(()=>{
+
+  fotoActual++;
+
+  if(fotoActual>=fotos.length){
+    fotoActual=0;
+  }
+
+  document.getElementById("fotoPrincipal").src=fotos[fotoActual];
+
+},3000);
 
 /* DIBUJOS CAYENDO */
+
 setInterval(()=>{
+
   let img=document.createElement("img");
+
   img.src=imgs[Math.floor(Math.random()*imgs.length)];
+
   img.className="caida";
+
   img.style.left=Math.random()*100+"vw";
+
   img.style.width="40px";
 
   document.body.appendChild(img);
+
   setTimeout(()=>img.remove(),6000);
+
 },800);
 
 /* MENSAJE */
-const mensaje=`Feliz primer mes de novios, mi amor 💕
 
-💞`;
+const mensaje=`
+
+Feliz primer mes de novios mi amor 💕✨
+
+Te amo muchísimo Kristel 💞✨
+
+`;
+
+/* ESCRIBIR */
 
 let i=0;
+
 function escribir(){
+
   if(i<mensaje.length){
-    texto.innerHTML+=mensaje[i]=="\n"?"<br><br>":mensaje[i];
+
+    texto.innerHTML+=
+    mensaje[i]=="\n"
+    ?"<br><br>"
+    :mensaje[i];
+
     i++;
-    setTimeout(escribir,15);
+
+    setTimeout(escribir,60);
   }
 }
 
 /* ENTRAR */
+
 function entrar(){
-  document.getElementById("inicio").classList.add("ocultar");
+
+  document.getElementById("inicio")
+  .classList.add("ocultar");
+
   document.body.classList.add("activo");
-  orbita.remove();
+
   escribir();
+
   music.play();
 }
 
 /* CONTADOR */
+
 setInterval(()=>{
-  let d=Math.floor((new Date()-new Date("2026-03-08"))/(1000*60*60*24));
-  contador.innerText="Llevamos "+d+" días juntos 💕";
+
+  let d=Math.floor(
+  (new Date()-new Date("2026-03-08"))
+  /(1000*60*60*24));
+
+  contador.innerText=
+  "Llevamos "+d+" días juntos 💕";
+
 },1000);
 
 /* SORPRESA */
+
 function sorpresa(){
-  if(navigator.vibrate) navigator.vibrate([200,100,200]);
+
+  if(navigator.vibrate){
+
+    navigator.vibrate([200,100,200]);
+  }
 
   for(let i=0;i<60;i++){
+
     let e=document.createElement("div");
+
     e.className="explosion";
+
     e.innerText="TE AMO KRISTEL 💖";
 
     e.style.left=window.innerWidth/2+"px";
+
     e.style.top=window.innerHeight/2+"px";
 
-    e.style.setProperty("--x",(Math.random()*400-200)+"px");
-    e.style.setProperty("--y",(Math.random()*400-200)+"px");
+    e.style.setProperty(
+    "--x",
+    (Math.random()*400-200)+"px"
+    );
+
+    e.style.setProperty(
+    "--y",
+    (Math.random()*400-200)+"px"
+    );
 
     document.body.appendChild(e);
+
     setTimeout(()=>e.remove(),1000);
   }
 }
