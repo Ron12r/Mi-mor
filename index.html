@@ -197,8 +197,15 @@ button{
 
 .explosion{
   position:fixed;
-  animation:boom 1s forwards;
+  animation:boom 2.5s forwards;
   z-index:3000;
+  font-size:24px;
+  font-weight:bold;
+  color:white;
+  text-shadow:
+  0 0 10px #ff4d6d,
+  0 0 20px #ff4d6d,
+  0 0 30px #ff4d6d;
 }
 
 @keyframes boom{
@@ -230,11 +237,15 @@ button{
 
   <div class="orbita" id="orbita"></div>
 
+  <button onclick="inicioMusic.play()">
+  💖 Música inicio 💖
+  </button>
+
   <img src="foto1.jpg" id="fotoPrincipal" class="foto">
 
   <h2>Para ti Kristel 💕</h2>
 
-  <button onclick="iniciarTodo()">Leer mensaje 💖</button>
+  <button onclick="entrar()">Leer mensaje 💖</button>
 
 </div>
 
@@ -342,6 +353,7 @@ const frases=[
 "bañaete mi vida ya le toca jsjs 🙈💖"
 
 ];
+
 /* IMAGENES */
 
 const imgs=[
@@ -507,21 +519,8 @@ function escribir(){
 
     i++;
 
-    setTimeout(escribir,20);
+    setTimeout(escribir,60);
   }
-}
-
-/* INICIAR TODO */
-
-function iniciarTodo(){
-
-  inicioMusic.play();
-
-  setTimeout(()=>{
-
-    entrar();
-
-  },1000);
 }
 
 /* ENTRAR */
@@ -578,17 +577,17 @@ function sorpresa(){
 
     e.style.setProperty(
     "--x",
-    (Math.random()*400-200)+"px"
+    (Math.random()*700-350)+"px"
     );
 
     e.style.setProperty(
     "--y",
-    (Math.random()*400-200)+"px"
+    (Math.random()*700-350)+"px"
     );
 
     document.body.appendChild(e);
 
-    setTimeout(()=>e.remove(),1000);
+    setTimeout(()=>e.remove(),2500);
   }
 }
 
