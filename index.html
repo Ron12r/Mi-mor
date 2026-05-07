@@ -246,6 +246,10 @@ button{
 <source src="mi-linda-mujer.mp3">
 </audio>
 
+<audio id="inicioMusic" loop autoplay>
+<source src="inicio.mp3">
+</audio>
+
 <button onclick="music.play()">🎵 Música</button>
 
 <button onclick="sorpresa()">💥 Sorpresa</button>
@@ -322,7 +326,17 @@ const frases=[
 "me haces tan feliz 🥹💗",
 
 "eres todo lo q necesito 🥺💗",
+  
+"eres mi tesoro mas preciado 🥹💖✨",
 
+"eres mi linda princesa 👸❤️",
+
+"gracias por todo mi amorcito 💓",
+
+"te keloooo mushishiimoooo mi bby 🥹💖✨",
+
+"te amoo hasta el universo y lo q haya mas alla 🥺✨💖",
+  
 "gracias por aceptarme mi niña 🥹💖✨",
 
 "bañaete mi vida ya le toca jsjs 🙈💖"
@@ -456,9 +470,8 @@ setInterval(()=>{
 },800);
 
 /* MENSAJE */
-
+  
 const mensaje=`Feliz primer mes de novios, mi amor 💕
-
 
 En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
 
@@ -479,8 +492,8 @@ Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
 Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy, y eso es lo que te hace especial para mí.
 
 Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
-
-
+  
+  
 /* ESCRIBIR */
 
 let i=0;
@@ -510,6 +523,10 @@ function entrar(){
   document.body.classList.add("activo");
 
   escribir();
+
+  inicioMusic.pause();
+
+  inicioMusic.currentTime=0;
 
   music.play();
 }
