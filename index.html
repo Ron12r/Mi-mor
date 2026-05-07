@@ -234,7 +234,7 @@ button{
 
   <h2>Para ti Kristel 💕</h2>
 
-  <button onclick="entrar()">Leer mensaje 💖</button>
+  <button onclick="iniciarTodo()">Leer mensaje 💖</button>
 
 </div>
 
@@ -246,7 +246,7 @@ button{
 <source src="mi-linda-mujer.mp3">
 </audio>
 
-<audio id="inicioMusic" loop autoplay>
+<audio id="inicioMusic" loop>
 <source src="inicio.mp3">
 </audio>
 
@@ -342,7 +342,6 @@ const frases=[
 "bañaete mi vida ya le toca jsjs 🙈💖"
 
 ];
-
 /* IMAGENES */
 
 const imgs=[
@@ -470,7 +469,7 @@ setInterval(()=>{
 },800);
 
 /* MENSAJE */
-  
+
 const mensaje=`Feliz primer mes de novios, mi amor 💕
 
 En este día tan especial para nosotros quiero agradecerte una vez más por estar conmigo y por haberme aceptado como tu novio.
@@ -492,8 +491,7 @@ Te voy a amar hasta donde tú me lo permitas, mi amor 💕.
 Quiero que sepas que te amo de verdad, que contigo soy serio y te respeto, me amas tal y como soy, y eso es lo que te hace especial para mí.
 
 Quiero vivir mil cosas contigo y esto apenas comienza ❤️`;
-  
-  
+
 /* ESCRIBIR */
 
 let i=0;
@@ -509,8 +507,21 @@ function escribir(){
 
     i++;
 
-    setTimeout(escribir,60);
+    setTimeout(escribir,20);
   }
+}
+
+/* INICIAR TODO */
+
+function iniciarTodo(){
+
+  inicioMusic.play();
+
+  setTimeout(()=>{
+
+    entrar();
+
+  },1000);
 }
 
 /* ENTRAR */
