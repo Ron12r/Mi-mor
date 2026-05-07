@@ -68,6 +68,35 @@ body.activo{
   z-index:999;
 }
 
+/* LLUVIA INICIO */
+
+#lluviaInicio{
+  position:absolute;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  z-index:1;
+}
+
+.corazonInicio{
+  position:absolute;
+  color:#ff4d6d;
+  font-size:22px;
+  animation:caidaInicio linear forwards;
+  opacity:0.9;
+}
+
+@keyframes caidaInicio{
+
+  from{
+    transform:translateY(-10vh);
+  }
+
+  to{
+    transform:translateY(110vh);
+  }
+}
+
 /* FOTO PRINCIPAL */
 
 .foto{
@@ -235,6 +264,8 @@ button{
 
 <div id="inicio">
 
+  <div id="lluviaInicio"></div>
+
   <div class="orbita" id="orbita"></div>
 
   <button onclick="inicioMusic.play()">
@@ -266,6 +297,41 @@ button{
 <button onclick="sorpresa()">💥 Sorpresa</button>
 
 <script>
+
+/* CORAZONES SOLO INICIO */
+
+const lluviaInicio=
+document.getElementById("lluviaInicio");
+
+const lluvia=setInterval(()=>{
+
+  let c=document.createElement("div");
+
+  c.className="corazonInicio";
+
+  const corazones=[
+"💖","💕","💗","💘",
+"❤️","💞","💓","🩷"
+];
+
+c.innerText=
+corazones[
+Math.floor(Math.random()*corazones.length)
+];
+
+  c.style.left=Math.random()*100+"vw";
+
+  c.style.fontSize=
+  (Math.random()*25+15)+"px";
+
+  c.style.animationDuration=
+  (Math.random()*3+4)+"s";
+
+  lluviaInicio.appendChild(c);
+
+  setTimeout(()=>c.remove(),7000);
+
+},150);
 
 /* ESTRELLAS */
 
@@ -350,10 +416,17 @@ const frases=[
   
 "gracias por aceptarme mi niña 🥹💖✨",
 
+"tuu eres mi bebita chiquita ❤️🥺",
+
+"queiro comerte a besoss 🙈💗",
+
+"solos tu y yo 🥺❤️✨ ",
+
+"teee quierooo muchooooooooooo 😍❤️",
+
 "bañaete mi vida ya le toca jsjs 🙈💖"
 
 ];
-
 /* IMAGENES */
 
 const imgs=[
@@ -531,6 +604,11 @@ function entrar(){
   .classList.add("ocultar");
 
   document.body.classList.add("activo");
+
+  clearInterval(lluvia);
+
+  document.getElementById("lluviaInicio")
+  .remove();
 
   escribir();
 
